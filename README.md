@@ -3,6 +3,10 @@ NaturalSort.Extension
 
 *Extension method for `StringComparer` that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").*
 
+
+[![Build status](https://ci.appveyor.com/api/projects/status/dal3731bpuavmpsg?svg=true)](https://ci.appveyor.com/project/tompazourek/endless)
+
+
 The library is written in C# and released with an [MIT license](https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/LICENSE), so feel **free to fork** or **use commercially**.
 
 **Any feedback is appreciated, please visit the [issues](https://github.com/tompazourek/NaturalSort.Extension/issues?state=open) page or send me an [e-mail](mailto:tom.pazourek@gmail.com).**
