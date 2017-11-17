@@ -10,7 +10,7 @@ namespace NaturalSort.Extension.Tests
     {
         [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
         private static void BaseTest(IEnumerable<string> input, IEnumerable<string> expected)
-            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase.WithNaturalSort()));
+            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()));
 
         [Theory]
         [InlineData(
@@ -420,10 +420,6 @@ namespace NaturalSort.Extension.Tests
         [InlineData(
             new[] { "bar.1-2", "bar.1" },
             new[] { "bar.1", "bar.1-2" }
-        )]
-        [InlineData(
-            new[] { "Udet", "\xDCbelacker", "Uell", "\xDClle", "Ueve", "\xDCxk\xFCll", "Uffenbach" },
-            new[] { "\xDCbelacker", "Udet", "Uell", "Ueve", "Uffenbach", "\xDClle", "\xDCxk\xFCll" }
         )]
         public void NodeNaturalSort(IEnumerable<string> input, IEnumerable<string> expected) => BaseTest(input, expected);
     }
