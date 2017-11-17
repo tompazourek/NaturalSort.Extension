@@ -10,7 +10,7 @@ namespace NaturalSort.Extension.Tests
     {
         [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
         private static void BaseTest(IEnumerable<string> input, IEnumerable<string> expected)
-            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.CurrentCultureIgnoreCase.WithNaturalSort()));
+            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase.WithNaturalSort()));
 
         [Theory]
         [InlineData(
