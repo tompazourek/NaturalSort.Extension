@@ -3,8 +3,12 @@ NaturalSort.Extension
 
 *Extension method for `StringComparer` that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").*
 
+[![Build status](https://img.shields.io/appveyor/ci/tompazourek/naturalsort-extension.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension)
+[![Tests](https://img.shields.io/appveyor/tests/tompazourek/naturalsort-extension.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension/build/tests)
+[![NuGet downloads](https://img.shields.io/nuget/dt/NaturalSort.Extension.svg)](https://www.nuget.org/packages/NaturalSort.Extension/)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/dal3731bpuavmpsg?svg=true)](https://ci.appveyor.com/project/tompazourek/endless)
+
+https://ci.appveyor.com/api/projects/status/dal3731bpuavmpsg?svg=true
 
 
 The library is written in C# and released with an [MIT license](https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/LICENSE), so feel **free to fork** or **use commercially**.
@@ -14,7 +18,7 @@ The library is written in C# and released with an [MIT license](https://raw.gith
 Download
 --------
 
-Binaries of the last build can be downloaded on the [AppVeyor CI page of the project](https://ci.appveyor.com/project/tompazourek/NaturalSort.Extension/build/artifacts).
+Binaries of the last build can be downloaded on the [AppVeyor CI page of the project](https://ci.appveyor.com/project/tompazourek/naturalsort-extension/build/artifacts).
 
 The library is also [published on NuGet.org](https://www.nuget.org/packages/NaturalSort.Extension/) (prerelease), install using:
 
