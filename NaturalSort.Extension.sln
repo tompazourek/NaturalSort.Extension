@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturalSort.Extension", "src\NaturalSort.Extension\NaturalSort.Extension.csproj", "{805DAC58-665D-4154-8CE9-BC697BBAAB1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturalSort.Extension.Tests", "tests\NaturalSort.Extension.Tests\NaturalSort.Extension.Tests.csproj", "{E293878F-BB7A-48EA-8116-84A0C97E8B89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3CB395C4-6885-4C4A-8077-077B9A0DDE77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C76D3E79-B558-4F0E-99A8-029937E11337}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{58C86B88-A1B9-4654-818E-580B5B4AAACF}"
+	ProjectSection(SolutionItems) = preProject
+		.appveyor.yml = .appveyor.yml
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{805DAC58-665D-4154-8CE9-BC697BBAAB1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805DAC58-665D-4154-8CE9-BC697BBAAB1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805DAC58-665D-4154-8CE9-BC697BBAAB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805DAC58-665D-4154-8CE9-BC697BBAAB1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E293878F-BB7A-48EA-8116-84A0C97E8B89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E293878F-BB7A-48EA-8116-84A0C97E8B89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E293878F-BB7A-48EA-8116-84A0C97E8B89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E293878F-BB7A-48EA-8116-84A0C97E8B89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{805DAC58-665D-4154-8CE9-BC697BBAAB1E} = {3CB395C4-6885-4C4A-8077-077B9A0DDE77}
+		{E293878F-BB7A-48EA-8116-84A0C97E8B89} = {C76D3E79-B558-4F0E-99A8-029937E11337}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B60C6359-6EC5-43C9-8D85-2506AFD1AE74}
+	EndGlobalSection
+EndGlobal
