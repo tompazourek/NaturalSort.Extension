@@ -19,7 +19,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>https://github.com/tompazourek/NaturalSort.Extension/releases</PackageReleaseNotes>
     <PackageId>NaturalSort.Extension</PackageId>
-    <DocumentationFile>NaturalSort.Extension.xml</DocumentationFile>
+    <DocumentationFile>/bin/$(Configuration)/NaturalSort.Extension.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
