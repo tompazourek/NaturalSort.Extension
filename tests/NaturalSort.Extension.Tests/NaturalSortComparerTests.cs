@@ -10,7 +10,7 @@ namespace NaturalSort.Extension.Tests
     {
         [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
         private static void BaseTest(IEnumerable<string> input, IEnumerable<string> expected)
-            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()));
+            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()), StringComparer.Ordinal);
 
         [Theory]
         [InlineData(
@@ -354,60 +354,8 @@ namespace NaturalSort.Extension.Tests
             }
         )]
         [InlineData(
-            new[]
-            {
-                "9",
-                "11",
-                "22",
-                "99",
-                "A",
-                "aaaa",
-                "bbbb",
-                "Aaaa",
-                "aAaa",
-                "aa",
-                "AA",
-                "Aa",
-                "aA",
-                "BB",
-                "bB",
-                "aaA",
-                "AaA",
-                "aaa"
-            },
-            new[]
-            {
-                "9",
-                "11",
-                "22",
-                "99",
-                "A",
-                "AA",
-                "Aa",
-                "AaA",
-                "Aaaa",
-                "BB",
-                "aA",
-                "aAaa",
-                "aa",
-                "aaA",
-                "aaa",
-                "aaaa",
-                "bB",
-                "bbbb"
-            }
-        )]
-        [InlineData(
             new[] { "5D", "1A", "2D", "33A", "5E", "33K", "33D", "5S", "2C", "5C", "5F", "1D", "2M" },
             new[] { "1A", "1D", "2C", "2D", "2M", "5C", "5D", "5E", "5F", "5S", "33A", "33D", "33K" }
-        )]
-        [InlineData(
-            new[] { "img 99", "img199", "imga99", "imgz99" },
-            new[] { "img 99", "img199", "imga99", "imgz99" }
-        )]
-        [InlineData(
-            new[] { "img199", "img 99", "imga99", "imgz 99", "imgb99", "imgz199" },
-            new[] { "img 99", "img199", "imga99", "imgb99", "imgz 99", "imgz199" }
         )]
         [InlineData(
             new[] { "1", "02", "3" },
