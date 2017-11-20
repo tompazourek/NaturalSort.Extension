@@ -13,6 +13,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/tompazourek/NaturalSort.Extension</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tompazourek/NaturalSort.Extension</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/assets/logo_64.png</PackageIconUrl>
     <PackageIconUrl></PackageIconUrl>
     <PackageTags>natural-sort string-comparison stringcomparer sorting sort c-sharp extension-methods</PackageTags>
     <Description>Extension method for StringComparer that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").</Description>

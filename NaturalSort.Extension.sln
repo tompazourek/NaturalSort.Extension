@@ -21,6 +21,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{58C86B88-A
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{086BBC6C-34A8-44AC-8B22-8F7BA7C09790}"
+	ProjectSection(SolutionItems) = preProject
+		assets\logo_128.png = assets\logo_128.png
+		assets\logo_256.png = assets\logo_256.png
+		assets\logo_32.png = assets\logo_32.png
+		assets\logo_320.png = assets\logo_320.png
+		assets\logo_64.png = assets\logo_64.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,4 +1,4 @@
-NaturalSort.Extension
+![NaturalSort.Extension logo](https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/assets/logo_32.png) NaturalSort.Extension
 =====================
 
 *Extension method for `StringComparer` that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").*
