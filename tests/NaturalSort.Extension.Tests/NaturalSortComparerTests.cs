@@ -9,8 +9,11 @@ namespace NaturalSort.Extension.Tests
     public class NaturalSortComparerTests
     {
         [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
-        private static void BaseTest(IEnumerable<string> input, IEnumerable<string> expected)
-            => Assert.Equal(expected, input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()), StringComparer.Ordinal);
+        private static void BaseTest(string[] input, IEnumerable<string> expected)
+        {
+            var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
+            Assert.Equal(expected, actual, StringComparer.Ordinal);
+        }
 
         [Theory]
         [InlineData(
@@ -25,7 +28,19 @@ namespace NaturalSort.Extension.Tests
             new[] { "2.2sec", "1.9sec", "1.53sec" },
             new[] { "1.9sec", "1.53sec", "2.2sec" }
         )]
-        public void WindowsExplorer(IEnumerable<string> input, IEnumerable<string> expected) => BaseTest(input, expected);
+        [InlineData(
+            new[] { "1.txt", "1a.txt", "2.txt", "11.txt", "a.txt", "a1.txt", "a2.txt", "a11.txt", "aa.txt", "b.txt", "ba.txt", "bb.txt" },
+            new[] { "1.txt", "1a.txt", "2.txt", "11.txt", "a.txt", "a1.txt", "a2.txt", "a11.txt", "aa.txt", "b.txt", "ba.txt", "bb.txt" }
+        )]
+        [InlineData(
+            new[] { "!1", "!a", "!abc", "_abc", "{abc}", "1.9 sec", "1.53 sec", "1_2", "1_3", "1_txt", "2.2 sec", "8_txt", "12", "13_3", "99!txt", "99.txt", "99_txt", "999_txt", "a_txt", "a1_txt" },
+            new[] { "!1", "!a", "!abc", "_abc", "{abc}", "1.9 sec", "1.53 sec", "1_2", "1_3", "1_txt", "2.2 sec", "8_txt", "12", "13_3", "99!txt", "99.txt", "99_txt", "999_txt", "a_txt", "a1_txt" }
+        )]
+        [InlineData(
+            new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x=x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" },
+            new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x=x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" }
+        )]
+        public void WindowsExplorer(string[] input, string[] expected) => BaseTest(input, expected);
 
         /// <remarks>
         /// Data from: http://www.davekoelle.com/alphanum.html
@@ -161,10 +176,11 @@ namespace NaturalSort.Extension.Tests
                 "Xiph Xlater 10000",
             }
         )]
-        public void DaveKoelleAlphanum(IEnumerable<string> input, IEnumerable<string> expected) => BaseTest(input, expected);
+        public void DaveKoelleAlphanum(string[] input, string[] expected) => BaseTest(input, expected);
 
         /// <summary>
-        /// Data from: https://github.com/yobacca/node-natural-sort (https://github.com/yobacca/node-natural-sort/blob/master/LICENSE.md)
+        /// Data from: https://github.com/yobacca/node-natural-sort
+        /// (https://github.com/yobacca/node-natural-sort/blob/master/LICENSE.md)
         /// </summary>
         [Theory]
         [InlineData(
@@ -369,6 +385,6 @@ namespace NaturalSort.Extension.Tests
             new[] { "bar.1-2", "bar.1" },
             new[] { "bar.1", "bar.1-2" }
         )]
-        public void NodeNaturalSort(IEnumerable<string> input, IEnumerable<string> expected) => BaseTest(input, expected);
+        public void NodeNaturalSort(string[] input, string[] expected) => BaseTest(input, expected);
     }
 }
