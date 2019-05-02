@@ -37,8 +37,8 @@ namespace NaturalSort.Extension.Tests
             new[] { "!1", "!a", "!abc", "_abc", "{abc}", "1.9 sec", "1.53 sec", "1_2", "1_3", "1_txt", "2.2 sec", "8_txt", "12", "13_3", "99!txt", "99.txt", "99_txt", "999_txt", "a_txt", "a1_txt" }
         )]
         [InlineData(
-            new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x=x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" },
-            new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x=x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" }
+            new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" },
+            new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" }
         )]
         public void WindowsExplorer(string[] input, string[] expected) => BaseTest(input, expected);
 
