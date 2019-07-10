@@ -16,6 +16,14 @@ namespace NaturalSort.Extension.Tests
         }
 
         [Theory]
+        [InlineData(new[] { "a", "b" }, new[] { "a", "b" })]
+        [InlineData(new[] { "b", "a" }, new[] { "a", "b" })]
+        [InlineData(new[] { "0", "1" }, new[] { "0", "1" })]
+        [InlineData(new[] { "1", "0" }, new[] { "0", "1" })]
+        [InlineData(new[] { "10.0401", "10.022" }, new[] { "10.022", "10.0401" })]
+        public void TwoItems(string[] input, string[] expected) => BaseTest(input, expected);
+
+        [Theory]
         [InlineData(
             new[] { "10.0401", "10.022", "10.042", "10.021999" },
             new[] { "10.022", "10.042", "10.0401", "10.021999" }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace NaturalSort.Extension
 {
@@ -18,7 +15,8 @@ namespace NaturalSort.Extension
         /// </summary>
         /// <param name="stringComparer">Used string comparer</param>
         /// <returns>Returns comparer of strings that considers natural sorting.</returns>
-        public static IComparer<string> WithNaturalSort(this StringComparer stringComparer) => new NaturalSortComparer(stringComparer);
+        public static IComparer<string> WithNaturalSort(this StringComparer stringComparer)
+            => new NaturalSortComparer(stringComparer);
 
         private class NaturalSortComparer : IComparer<string>
         {
@@ -27,111 +25,175 @@ namespace NaturalSort.Extension
             /// </summary>
             private readonly StringComparer _stringComparer;
 
-            public NaturalSortComparer(StringComparer stringComparer) => _stringComparer = stringComparer;
+            public NaturalSortComparer(StringComparer stringComparer)
+                => _stringComparer = stringComparer;
 
-            public int Compare(string s1, string s2)
+            public int Compare(string str1, string str2)
             {
-                var tokens1 = Tokenize(s1).ToArray();
-                var tokens2 = Tokenize(s2).ToArray();
+                if (str1 == str2) return 0;
+                if (str1 == null) return -1;
+                if (str2 == null) return 1;
 
-                var zipCompare = tokens1.Zip(tokens2, TokenCompare).FirstOrDefault(x => x != 0);
-                if (zipCompare != 0)
-                    return zipCompare;
+                var strLength1 = str1.Length;
+                var strLength2 = str2.Length;
 
-                var lengthCompare = tokens1.Length.CompareTo(tokens2.Length);
-                return lengthCompare;
-            }
+                var startIndex1 = 0;
+                var startIndex2 = 0;
 
-            /// <summary>
-            /// Splits inputs into tokens. Each token is either a number, piece of string, or a dot.
-            /// </summary>
-            private static IEnumerable<Token> Tokenize(string s)
-            {
-                if (s == null)
-                    yield break;
-
-                var currentTokenBuilder = new StringBuilder(s.Length);
-                TokenKind? currentTokenKind = null;
-
-                foreach (var c in s)
+                while (true)
                 {
-                    var characterTokenKind = GetCharacterTokenKind(c);
-                    if (currentTokenKind == characterTokenKind)
+                    GetNextToken(str1, strLength1, startIndex1, out var currentToken1, out var endIndex1);
+                    GetNextToken(str2, strLength2, startIndex2, out var currentToken2, out var endIndex2);
+
+                    // check if any string doesn't have any tokens left
+                    if (currentToken1 == null && currentToken2 == null) return 0;
+                    if (currentToken1 == null) return -1;
+                    if (currentToken2 == null) return 1;
+
+                    // if the token kinds are different, compare just the token kind
+                    var currentTokenValue1 = currentToken1.Value;
+                    var currentTokenValue2 = currentToken2.Value;
+
+                    var tokenCompare = currentTokenValue1.CompareTo(currentTokenValue2);
+                    if (tokenCompare != 0)
+                        return tokenCompare;
+
+                    // now we know that both tokens are the same kind
+
+                    if (currentTokenValue1 == Token.Digits)
                     {
-                        currentTokenBuilder.Append(c);
-                        continue;
+                        // compare both tokens as numbers
+
+                        // detect if one number has greater magnitude than the other
+                        var orderOfMagnitude1 = GetOrderOfMagnitude(str1, startIndex1, endIndex1);
+                        var orderOfMagnitude2 = GetOrderOfMagnitude(str2, startIndex2, endIndex2);
+
+                        var orderOfMagnitudeCompare = orderOfMagnitude1.CompareTo(orderOfMagnitude2);
+                        if (orderOfMagnitudeCompare != 0)
+                            return orderOfMagnitudeCompare;
+
+                        // both numbers have the same magnitude, compare digit per digit
+                        var digitIndex1 = endIndex1 - orderOfMagnitude1 - 1;
+                        var digitIndex2 = endIndex2 - orderOfMagnitude2 - 1;
+
+                        while (true)
+                        {
+                            var digit1 = str1[digitIndex1];
+                            var digit2 = str2[digitIndex2];
+
+                            var digitCompare = digit1.CompareTo(digit2);
+                            if (digitCompare != 0)
+                                return digitCompare;
+
+                            digitIndex1++;
+                            
+                            if (digitIndex1 >= endIndex1)
+                                break;
+
+                            digitIndex2++;
+
+                            if (digitIndex2 >= endIndex2)
+                                break;
+                        }
+
+                        // the numbers are the same, compare number lengths
+                        var numberLength1 = endIndex1 - startIndex1;
+                        var numberLength2 = endIndex2 - startIndex2;
+                        var numberLengthCompare = numberLength2.CompareTo(numberLength1); // intentionally in reverse order
+                        if (numberLengthCompare != 0)
+                            return numberLengthCompare;
+                    }
+                    else
+                    {
+                        // compare both tokens as strings
+                        var tokenString1 = str1.Substring(startIndex1, endIndex1 - startIndex1);
+                        var tokenString2 = str2.Substring(startIndex2, endIndex2 - startIndex2);
+                        var stringCompare = _stringComparer.Compare(tokenString1, tokenString2);
+                        if (stringCompare != 0)
+                            return stringCompare;
                     }
 
-                    if (currentTokenBuilder.Length > 0 && currentTokenKind != null)
-                        yield return new Token(currentTokenBuilder.ToString(), currentTokenKind.Value);
-
-                    currentTokenBuilder.Clear().Append(c);
-                    currentTokenKind = characterTokenKind;
+                    startIndex1 = endIndex1;
+                    startIndex2 = endIndex2;
                 }
-
-                if (currentTokenBuilder.Length > 0 && currentTokenKind != null)
-                    yield return new Token(currentTokenBuilder.ToString(), currentTokenKind.Value);
             }
 
-            private static TokenKind GetCharacterTokenKind(char c)
+            private static int GetOrderOfMagnitude(string str, int startIndex, int endIndex)
             {
-                if (char.IsLetter(c))
-                    return TokenKind.Letters;
-
-                if (char.IsDigit(c))
-                    return TokenKind.Digits;
-
-                return TokenKind.Other;
-            }
-
-            /// <summary>
-            /// Parses string as a number, or returns 0 otherwise.
-            /// </summary>
-            private static ulong ParseNumber(string s) => ulong.TryParse(s, NumberStyles.None, CultureInfo.InvariantCulture, out var result) ? result : 0;
-
-            /// <summary>
-            /// Compares two tokens.
-            /// </summary>
-            private int TokenCompare(Token token1, Token token2)
-            {
-                // compare if the token kinds are different
-                var tokenKindCompare = token1.Kind.CompareTo(token2.Kind);
-                if (tokenKindCompare != 0)
-                    return tokenKindCompare;
-
-                if (token1.Kind == TokenKind.Digits)
+                for (var i = startIndex; i < endIndex; i++)
                 {
-                    // compare if both tokens are digits
-                    var number1 = ParseNumber(token1.Value);
-                    var number2 = ParseNumber(token2.Value);
+                    var digit = str[i];
+                    if (digit == '0')
+                        continue;
 
-                    var numberCompare = number1.CompareTo(number2);
-                    if (numberCompare != 0)
-                        return numberCompare;
+                    var orderOfMagnitude = endIndex - i - 1;
+                    return orderOfMagnitude;
                 }
 
-                // compare as strings if both tokens are letters or other, or are the same number
-                var stringCompare = _stringComparer.Compare(token1.Value, token2.Value);
-                return stringCompare;
+                return 0;
             }
 
-            private enum TokenKind
+            private static void GetNextToken(string str, int strLength, int startIndex, out Token? parsedToken, out int endIndex)
+            {
+                Token? currentToken = null;
+
+                for (endIndex = startIndex; endIndex < strLength; endIndex++)
+                {
+                    var c = str[endIndex];
+
+                    Token charToken;
+                    if (c < '0') // ASCII before '0'
+                    {
+                        charToken = Token.Other;
+                    }
+                    else if (c <= '9')  // between '0' and '9'
+                    {
+                        charToken = Token.Digits;
+                    }
+                    else if (c < 'A') // after '9' and before 'A'
+                    {
+                        charToken = Token.Other;
+                    }
+                    else if (c <= 'Z') // between 'A' and 'Z'
+                    {
+                        charToken = Token.Letters;
+                    }
+                    else if (c < 'a') // after 'Z' and before 'a'
+                    {
+                        charToken = Token.Other;
+                    }
+                    else if (c <= 'z') // between 'a' and 'z'
+                    {
+                        charToken = Token.Letters;
+                    }
+                    else if (char.IsLetter(c)) // checks unicode categories
+                    {
+                        charToken = Token.Letters;
+                    }
+                    else
+                    {
+                        charToken = Token.Other;
+                    }
+
+                    if (currentToken == null)
+                    {
+                        currentToken = charToken;
+                    }
+                    else if (currentToken != charToken)
+                    {
+                        parsedToken = currentToken;
+                        return;
+                    }
+                }
+
+                parsedToken = currentToken;
+            }
+
+            private enum Token
             {
                 Other = 0,
                 Digits = 1,
                 Letters = 2,
-            }
-
-            private struct Token
-            {
-                public Token(string value, TokenKind kind)
-                {
-                    Value = value;
-                    Kind = kind;
-                }
-
-                public string Value { get; }
-                public TokenKind Kind { get; }
             }
         }
     }
