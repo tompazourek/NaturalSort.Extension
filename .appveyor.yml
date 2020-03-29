@@ -1,31 +1,23 @@
-image: Visual Studio 2017
+image: Visual Studio 2019
+
+# Adds "+build.XXX" to MinVer's build metadata
+environment:
+  MINVERBUILDMETADATA: build.%APPVEYOR_BUILD_NUMBER%
+
+# AppVeyor's displaye version, will get updated by MSBuild target
+version: '{build}'
 
 configuration: Release
 
 before_build:
   - dotnet restore
 
-environment:
-  base_version: '2.1.0'
-  version_suffix: ''
-
-version: $(base_version).{build}$(version_suffix)
-
-dotnet_csproj:
-  patch: true
-  file: 'src\NaturalSort.Extension\*.csproj'
-  version: '$(base_version)$(version_suffix)'
-  assembly_version: '$(base_version)'
-  file_version: '$(base_version).{build}'
-
 build:
   parallel: true
   verbosity: minimal
 
 test_script:
-  - cd tests\NaturalSort.Extension.Tests
-  - dotnet xunit --fx-version 2.0.0
-  - cd ..\..
+  - dotnet test
 
 artifacts:
-  - path: src\NaturalSort.Extension\bin\%configuration%\*.nupkg
+  - path: ./**/*.nupkg
