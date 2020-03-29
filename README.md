@@ -23,7 +23,7 @@ The library is also [published on NuGet.org](https://www.nuget.org/packages/Natu
 PM> Install-Package NaturalSort.Extension
 ```
 
-<sup>NaturalSort.Extension is built for .NET v4.0, .NET v4.7, .NET Standard 1.3 and .NET Standard 2.0.</sup>
+<sup>NaturalSort.Extension is built for .NET v4.0 and .NET Standard 1.3.</sup>
 
 Usage
 -----
