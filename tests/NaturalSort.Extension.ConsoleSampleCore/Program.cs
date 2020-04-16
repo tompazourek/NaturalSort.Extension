@@ -20,7 +20,7 @@ namespace NaturalSort.Extension.ConsoleSampleCore
 
             Console.WriteLine("Sort with StringComparer.OrdinalIgnoreCase");
 
-            stopwatch.Start();
+            stopwatch.Restart();
             var ordered1 = items.OrderBy(i => i, StringComparer.OrdinalIgnoreCase).ToList();
             stopwatch.Stop();
 
@@ -28,7 +28,7 @@ namespace NaturalSort.Extension.ConsoleSampleCore
 
             Console.WriteLine("Sort with StringComparer.OrdinalIgnoreCase.WithNaturalSort()");
 
-            stopwatch.Start();
+            stopwatch.Restart();
             var ordered2 = items.OrderBy(i => i, StringComparer.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
             stopwatch.Stop();
             Console.WriteLine("Duration " + stopwatch.Elapsed);
