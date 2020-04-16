@@ -60,54 +60,39 @@ namespace NaturalSort.Extension
 
                     // now we know that both tokens are the same kind
 
+                    var currentTokenLength1 = endIndex1 - startIndex1;
+                    var currentTokenLength2 = endIndex2 - startIndex2;
+
                     if (currentTokenValue1 == Token.Digits)
                     {
                         // compare both tokens as numbers
+                        var maxLength = Math.Max(currentTokenLength1, currentTokenLength2);
 
-                        // detect if one number has greater magnitude than the other
-                        var orderOfMagnitude1 = GetOrderOfMagnitude(str1, startIndex1, endIndex1);
-                        var orderOfMagnitude2 = GetOrderOfMagnitude(str2, startIndex2, endIndex2);
+                        // both spans will get padded by zeroes on the left to be the same length
+                        const char paddingChar = '0';
+                        var paddingLength1 = maxLength - currentTokenLength1;
+                        var paddingLength2 = maxLength - currentTokenLength2;
 
-                        var orderOfMagnitudeCompare = orderOfMagnitude1.CompareTo(orderOfMagnitude2);
-                        if (orderOfMagnitudeCompare != 0)
-                            return orderOfMagnitudeCompare;
-
-                        // both numbers have the same magnitude, compare digit per digit
-                        var digitIndex1 = endIndex1 - orderOfMagnitude1 - 1;
-                        var digitIndex2 = endIndex2 - orderOfMagnitude2 - 1;
-
-                        while (true)
+                        for (var i = 0; i < maxLength; i++)
                         {
-                            var digit1 = str1[digitIndex1];
-                            var digit2 = str2[digitIndex2];
+                            var digit1 = i < paddingLength1 ? paddingChar : str1[startIndex1 + i - paddingLength1];
+                            var digit2 = i < paddingLength2 ? paddingChar : str2[startIndex2 + i - paddingLength2];
 
                             var digitCompare = digit1.CompareTo(digit2);
                             if (digitCompare != 0)
                                 return digitCompare;
-
-                            digitIndex1++;
-                            
-                            if (digitIndex1 >= endIndex1)
-                                break;
-
-                            digitIndex2++;
-
-                            if (digitIndex2 >= endIndex2)
-                                break;
                         }
 
-                        // the numbers are the same, compare number lengths
-                        var numberLength1 = endIndex1 - startIndex1;
-                        var numberLength2 = endIndex2 - startIndex2;
-                        var numberLengthCompare = numberLength2.CompareTo(numberLength1); // intentionally in reverse order
-                        if (numberLengthCompare != 0)
-                            return numberLengthCompare;
+                        // if the numbers are equal, we compare how much we padded the strings
+                        var paddingCompare = paddingLength1.CompareTo(paddingLength2);
+                        if (paddingCompare != 0)
+                            return paddingCompare;
                     }
                     else
                     {
                         // compare both tokens as strings
-                        var tokenString1 = str1.Substring(startIndex1, endIndex1 - startIndex1);
-                        var tokenString2 = str2.Substring(startIndex2, endIndex2 - startIndex2);
+                        var tokenString1 = str1.Substring(startIndex1, currentTokenLength1);
+                        var tokenString2 = str2.Substring(startIndex2, currentTokenLength2);
                         var stringCompare = _stringComparer.Compare(tokenString1, tokenString2);
                         if (stringCompare != 0)
                             return stringCompare;
@@ -116,21 +101,6 @@ namespace NaturalSort.Extension
                     startIndex1 = endIndex1;
                     startIndex2 = endIndex2;
                 }
-            }
-
-            private static int GetOrderOfMagnitude(string str, int startIndex, int endIndex)
-            {
-                for (var i = startIndex; i < endIndex; i++)
-                {
-                    var digit = str[i];
-                    if (digit == '0')
-                        continue;
-
-                    var orderOfMagnitude = endIndex - i - 1;
-                    return orderOfMagnitude;
-                }
-
-                return 0;
             }
 
             private static void GetNextToken(string str, int strLength, int startIndex, out Token? parsedToken, out int endIndex)
