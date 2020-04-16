@@ -24,7 +24,7 @@ namespace NaturalSort.Extension
             /// String comparer used for comparing strings.
             /// </summary>
             private readonly StringComparer _stringComparer;
-            
+
             // Token values (not an enum as a performance micro-optimization)
             private const byte TokenNone = 0;
             private const byte TokenOther = 1;
@@ -48,9 +48,42 @@ namespace NaturalSort.Extension
 
                 while (true)
                 {
-                    GetNextToken(str1, strLength1, startIndex1, out var token1, out var endIndex1);
-                    GetNextToken(str2, strLength2, startIndex2, out var token2, out var endIndex2);
-                    
+                    // get next token from string 1
+                    var endIndex1 = startIndex1;
+                    var token1 = TokenNone;
+                    while (endIndex1 < strLength1)
+                    {
+                        var charToken = GetTokenFromChar(str1[endIndex1]);
+                        if (token1 == TokenNone)
+                        {
+                            token1 = charToken;
+                        }
+                        else if (token1 != charToken)
+                        {
+                            break;
+                        }
+
+                        endIndex1++;
+                    }
+
+                    // get next token from string 2
+                    var endIndex2 = startIndex2;
+                    var token2 = TokenNone;
+                    while (endIndex2 < strLength2)
+                    {
+                        var charToken = GetTokenFromChar(str2[endIndex2]);
+                        if (token2 == TokenNone)
+                        {
+                            token2 = charToken;
+                        }
+                        else if (token2 != charToken)
+                        {
+                            break;
+                        }
+
+                        endIndex2++;
+                    }
+
                     // if the token kinds are different, compare just the token kind
                     var tokenCompare = token1.CompareTo(token2);
                     if (tokenCompare != 0)
@@ -100,61 +133,22 @@ namespace NaturalSort.Extension
                 }
             }
 
-            private static void GetNextToken(string str, int strLength, int startIndex, out byte parsedToken, out int endIndex)
-            {
-                var currentToken = TokenNone;
-
-                for (endIndex = startIndex; endIndex < strLength; endIndex++)
-                {
-                    var c = str[endIndex];
-
-                    byte charToken;
-                    if (c < '0') // ASCII before '0'
-                    {
-                        charToken = TokenOther;
-                    }
-                    else if (c <= '9')  // between '0' and '9'
-                    {
-                        charToken = TokenDigits;
-                    }
-                    else if (c < 'A') // after '9' and before 'A'
-                    {
-                        charToken = TokenOther;
-                    }
-                    else if (c <= 'Z') // between 'A' and 'Z'
-                    {
-                        charToken = TokenLetters;
-                    }
-                    else if (c < 'a') // after 'Z' and before 'a'
-                    {
-                        charToken = TokenOther;
-                    }
-                    else if (c <= 'z') // between 'a' and 'z'
-                    {
-                        charToken = TokenLetters;
-                    }
-                    else if (char.IsLetter(c)) // checks unicode categories
-                    {
-                        charToken = TokenLetters;
-                    }
-                    else
-                    {
-                        charToken = TokenOther;
-                    }
-
-                    if (currentToken == TokenNone)
-                    {
-                        currentToken = charToken;
-                    }
-                    else if (currentToken != charToken)
-                    {
-                        parsedToken = currentToken;
-                        return;
-                    }
-                }
-
-                parsedToken = currentToken;
-            }
+            private static byte GetTokenFromChar(char c)
+                => c >= 'a'
+                    ? c <= 'z'
+                        ? TokenLetters
+                        : c < 128
+                            ? TokenOther
+                            : char.IsLetter(c)
+                                ? TokenLetters
+                                : TokenOther
+                    : c >= 'A'
+                        ? c <= 'Z'
+                            ? TokenLetters
+                            : TokenOther
+                        : c >= '0' && c <= '9'
+                            ? TokenDigits
+                            : TokenOther;
         }
     }
 }
