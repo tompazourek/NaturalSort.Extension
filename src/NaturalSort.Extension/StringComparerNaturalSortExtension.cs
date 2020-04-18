@@ -90,6 +90,11 @@ namespace NaturalSort.Extension
                         return tokenCompare;
 
                     // now we know that both tokens are the same kind
+
+                    // didn't find any more tokens, return that they're equal
+                    if (token1 == TokenNone)
+                        return 0;
+                    
                     var rangeLength1 = endIndex1 - startIndex1;
                     var rangeLength2 = endIndex2 - startIndex2;
 
