@@ -394,5 +394,19 @@ namespace NaturalSort.Extension.Tests
             new[] { "bar.1", "bar.1-2" }
         )]
         public void NodeNaturalSort(string[] input, string[] expected) => BaseTest(input, expected);
+
+        /// <summary>
+        /// In v2.2.0, this comparison appears to get stuck in an infinite loop whereas v2.1.0 handles it without any problems.
+        /// See: https://github.com/tompazourek/NaturalSort.Extension/issues/4 (reported by El-Gor-do)
+        /// </summary>
+        [Fact]
+        public void Issue4_OrdinalIgnoreCase_comparison_infinite_loop()
+        {
+            // action
+            var result = StringComparer.OrdinalIgnoreCase.WithNaturalSort().Compare("abc", "Abc");
+
+            // assert
+            Assert.Equal(0, result);
+        }
     }
 }
