@@ -9,9 +9,21 @@ namespace NaturalSort.Extension.Tests
     public class NaturalSortComparerTests
     {
         [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
-        private static void BaseTest(string[] input, IEnumerable<string> expected)
+        private static void RunTests(string[] input, string[] expected)
+        {
+            RunTests_StringComparerOrdinalIgnoreCase(input, expected);
+            RunTests_StringComparisonOrdinalIgnoreCase(input, expected);
+        }
+
+        private static void RunTests_StringComparerOrdinalIgnoreCase(string[] input, string[] expected)
         {
             var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
+            Assert.Equal(expected, actual, StringComparer.Ordinal);
+        }
+        
+        private static void RunTests_StringComparisonOrdinalIgnoreCase(string[] input, string[] expected)
+        {
+            var actual = input.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
             Assert.Equal(expected, actual, StringComparer.Ordinal);
         }
 
@@ -21,7 +33,7 @@ namespace NaturalSort.Extension.Tests
         [InlineData(new[] { "0", "1" }, new[] { "0", "1" })]
         [InlineData(new[] { "1", "0" }, new[] { "0", "1" })]
         [InlineData(new[] { "10.0401", "10.022" }, new[] { "10.022", "10.0401" })]
-        public void TwoItems(string[] input, string[] expected) => BaseTest(input, expected);
+        public void TwoItems(string[] input, string[] expected) => RunTests(input, expected);
 
         [Theory]
         [InlineData(
@@ -48,7 +60,7 @@ namespace NaturalSort.Extension.Tests
             new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" },
             new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" }
         )]
-        public void WindowsExplorer(string[] input, string[] expected) => BaseTest(input, expected);
+        public void WindowsExplorer(string[] input, string[] expected) => RunTests(input, expected);
 
         /// <remarks>
         /// Data from: http://www.davekoelle.com/alphanum.html
@@ -184,7 +196,7 @@ namespace NaturalSort.Extension.Tests
                 "Xiph Xlater 10000",
             }
         )]
-        public void DaveKoelleAlphanum(string[] input, string[] expected) => BaseTest(input, expected);
+        public void DaveKoelleAlphanum(string[] input, string[] expected) => RunTests(input, expected);
 
         /// <summary>
         /// Data from: https://github.com/yobacca/node-natural-sort
@@ -393,7 +405,7 @@ namespace NaturalSort.Extension.Tests
             new[] { "bar.1-2", "bar.1" },
             new[] { "bar.1", "bar.1-2" }
         )]
-        public void NodeNaturalSort(string[] input, string[] expected) => BaseTest(input, expected);
+        public void NodeNaturalSort(string[] input, string[] expected) => RunTests(input, expected);
 
         /// <summary>
         /// In v2.2.0, this comparison appears to get stuck in an infinite loop whereas v2.1.0 handles it without any problems.
