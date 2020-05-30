@@ -3,8 +3,9 @@
 
 *Extension method for `StringComparison` or any `IComparer<string>` that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").*
 
-[![Build status](https://img.shields.io/appveyor/ci/tompazourek/naturalsort-extension.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension)
-[![Tests](https://img.shields.io/appveyor/tests/tompazourek/naturalsort-extension.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension/build/tests)
+[![Build status](https://img.shields.io/appveyor/ci/tompazourek/naturalsort-extension/master.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension)
+[![Tests](https://img.shields.io/appveyor/tests/tompazourek/naturalsort-extension/master.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension/build/tests)
+[![NuGet version](https://img.shields.io/nuget/v/NaturalSort.Extension.svg)](https://www.nuget.org/packages/NaturalSort.Extension/)
 [![NuGet downloads](https://img.shields.io/nuget/dt/NaturalSort.Extension.svg)](https://www.nuget.org/packages/NaturalSort.Extension/)
 
 
