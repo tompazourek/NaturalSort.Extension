@@ -26,10 +26,10 @@ namespace NaturalSort.Extension.ConsoleSample
 
             Console.WriteLine("Duration " + stopwatch.Elapsed);
 
-            Console.WriteLine("Sort with StringComparer.OrdinalIgnoreCase.WithNaturalSort()");
+            Console.WriteLine("Sort with StringComparison.OrdinalIgnoreCase.WithNaturalSort()");
 
             stopwatch.Restart();
-            var ordered2 = items.OrderBy(i => i, StringComparer.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
+            var ordered2 = items.OrderBy(i => i, StringComparison.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
             stopwatch.Stop();
             Console.WriteLine("Duration " + stopwatch.Elapsed);
 
