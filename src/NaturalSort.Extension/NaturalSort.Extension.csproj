@@ -16,8 +16,8 @@
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageReleaseNotes>$(RepositoryUrl)/releases</PackageReleaseNotes>
     <PackageIcon>logo_64.png</PackageIcon>
-    <PackageTags>natural-sort string-comparison stringcomparer sorting sort c-sharp extension-methods</PackageTags>
-    <Description>Extension method for StringComparer that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").</Description>
+    <PackageTags>natural-sort string-comparison stringcomparer sorting sort c-sharp extension-methods string comparer stringcomparison naturalsort</PackageTags>
+    <Description>Extension method for StringComparison that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").</Description>
   </PropertyGroup>
 
   <PropertyGroup Label="Symbols, docs">
