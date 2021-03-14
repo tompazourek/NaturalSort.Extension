@@ -5,6 +5,7 @@
 
 [![Build status](https://img.shields.io/appveyor/ci/tompazourek/naturalsort-extension/master.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension)
 [![Tests](https://img.shields.io/appveyor/tests/tompazourek/naturalsort-extension/master.svg)](https://ci.appveyor.com/project/tompazourek/naturalsort-extension/build/tests)
+[![codecov](https://codecov.io/gh/tompazourek/NaturalSort.Extension/branch/master/graph/badge.svg?token=31JTU6543K)](https://codecov.io/gh/tompazourek/NaturalSort.Extension)
 [![NuGet version](https://img.shields.io/nuget/v/NaturalSort.Extension.svg)](https://www.nuget.org/packages/NaturalSort.Extension/)
 [![NuGet downloads](https://img.shields.io/nuget/dt/NaturalSort.Extension.svg)](https://www.nuget.org/packages/NaturalSort.Extension/)
 
