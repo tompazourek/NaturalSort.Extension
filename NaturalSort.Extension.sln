@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturalSort.Extension", "src\NaturalSort.Extension\NaturalSort.Extension.csproj", "{805DAC58-665D-4154-8CE9-BC697BBAAB1E}"
 EndProject
@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{086BBC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturalSort.Extension.ConsoleSampleCore", "tests\NaturalSort.Extension.ConsoleSampleCore\NaturalSort.Extension.ConsoleSampleCore.csproj", "{BB20BD61-8CD6-418B-A8B5-F72FDE4872A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturalSort.Extension.ConsoleSample", "tests\NaturalSort.Extension.ConsoleSample\NaturalSort.Extension.ConsoleSample.csproj", "{3E1D6E16-078C-43CB-9C8C-9D68143BC85A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturalSort.Extension.ConsoleSample", "tests\NaturalSort.Extension.ConsoleSample\NaturalSort.Extension.ConsoleSample.csproj", "{3E1D6E16-078C-43CB-9C8C-9D68143BC85A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,7 +17,7 @@ namespace NaturalSort.Extension
         /// <param name="stringComparer">Used string comparer</param>
         /// <returns>Returns comparer of strings that considers natural sorting.</returns>
         public static NaturalSortComparer WithNaturalSort(this IComparer<string> stringComparer)
-            => new NaturalSortComparer(stringComparer);
+            => new(stringComparer);
 
         /// <summary>
         /// Uses given string comparison to create a comparer with natural sorting functionality
@@ -28,6 +28,6 @@ namespace NaturalSort.Extension
         /// <param name="stringComparison">Used string comparison</param>
         /// <returns>Returns comparer of strings that considers natural sorting.</returns>
         public static NaturalSortComparer WithNaturalSort(this StringComparison stringComparison)
-            => new NaturalSortComparer(stringComparison);
+            => new(stringComparison);
     }
 }
