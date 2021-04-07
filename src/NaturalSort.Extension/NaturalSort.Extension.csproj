@@ -35,7 +35,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -55,8 +55,8 @@
     <None Remove="*.DotSettings" />
     <None Include="..\..\assets\logo_64.png" Pack="true" PackagePath="" />
   </ItemGroup>
-    
+
   <Target Name="UpdateAppVeyorBuildVersion" AfterTargets="MinVer" Condition=" '$(APPVEYOR)' == 'true' ">
     <Exec Command="appveyor UpdateBuild -Version &quot;$(MinVerVersion)&quot;" />
-   </Target>
+  </Target>
 </Project>

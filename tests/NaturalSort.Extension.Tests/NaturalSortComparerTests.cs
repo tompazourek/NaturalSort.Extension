@@ -19,7 +19,7 @@ namespace NaturalSort.Extension.Tests
             var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
             Assert.Equal(expected, actual, StringComparer.Ordinal);
         }
-        
+
         private static void RunTests_StringComparisonOrdinalIgnoreCase(string[] input, string[] expected)
         {
             var actual = input.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort()).ToArray();

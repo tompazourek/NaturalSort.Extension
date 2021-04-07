@@ -28,7 +28,7 @@ namespace NaturalSort.Extension
         private const byte TokenOther = 1;
         private const byte TokenDigits = 2;
         private const byte TokenLetters = 3;
-        
+
         /// <summary>
         /// Constructs comparer with a <seealso cref="StringComparison"/> as the inner mechanism.
         /// Prefer this to <see cref="NaturalSortComparer(System.Collections.Generic.IComparer{string})"/> if possible.
