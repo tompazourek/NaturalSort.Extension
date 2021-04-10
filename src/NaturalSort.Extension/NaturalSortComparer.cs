@@ -7,14 +7,14 @@ namespace NaturalSort.Extension
     /// Creates a string comparer with natural sorting functionality
     /// which allows it to sort numbers inside the strings as numbers, not as letters.
     /// (e.g. "1", "2", "10" instead of "1", "10", "2").
-    /// It uses either a <seealso cref="StringComparison"/> (preferred) or arbitrary
-    /// <see cref="System.Collections.Generic.IComparer{T}"/> string comparer for the comparisons.
+    /// It uses either a <seealso cref="StringComparison" /> (preferred) or arbitrary
+    /// <see cref="System.Collections.Generic.IComparer{T}" /> string comparer for the comparisons.
     /// </summary>
     public class NaturalSortComparer : IComparer<string>
     {
         /// <summary>
         /// String comparison used for comparing strings.
-        /// Used if <see cref="_stringComparer"/> is null.
+        /// Used if <see cref="_stringComparer" /> is null.
         /// </summary>
         private readonly StringComparison _stringComparison;
 
@@ -30,16 +30,16 @@ namespace NaturalSort.Extension
         private const byte TokenLetters = 3;
 
         /// <summary>
-        /// Constructs comparer with a <seealso cref="StringComparison"/> as the inner mechanism.
-        /// Prefer this to <see cref="NaturalSortComparer(System.Collections.Generic.IComparer{string})"/> if possible.
+        /// Constructs comparer with a <seealso cref="StringComparison" /> as the inner mechanism.
+        /// Prefer this to <see cref="NaturalSortComparer(System.Collections.Generic.IComparer{string})" /> if possible.
         /// </summary>
         /// <param name="stringComparison">String comparison to use</param>
         public NaturalSortComparer(StringComparison stringComparison)
             => _stringComparison = stringComparison;
 
         /// <summary>
-        /// Constructs comparer with a <seealso cref="IComparer{T}"/> string comparer as the inner mechanism.
-        /// Prefer <see cref="NaturalSortComparer(StringComparison)"/> if possible.
+        /// Constructs comparer with a <seealso cref="IComparer{T}" /> string comparer as the inner mechanism.
+        /// Prefer <see cref="NaturalSortComparer(StringComparison)" /> if possible.
         /// </summary>
         /// <param name="stringComparer">String comparer to wrap</param>
         public NaturalSortComparer(IComparer<string> stringComparer)

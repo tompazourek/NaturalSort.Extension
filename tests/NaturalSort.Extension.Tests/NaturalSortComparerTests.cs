@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
@@ -7,7 +6,6 @@ namespace NaturalSort.Extension.Tests
 {
     public class NaturalSortComparerTests
     {
-        [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
         private static void RunTests(string[] input, string[] expected)
         {
             RunTests_StringComparerOrdinalIgnoreCase(input, expected);
@@ -91,7 +89,8 @@ namespace NaturalSort.Extension.Tests
                 "z7.doc",
                 "z8.doc",
                 "z9.doc",
-            }, new[]
+            },
+            new[]
             {
                 "z1.doc",
                 "z2.doc",
@@ -156,7 +155,8 @@ namespace NaturalSort.Extension.Tests
                 "Xiph Xlater 500",
                 "Xiph Xlater 5000",
                 "Xiph Xlater 58",
-            }, new[]
+            },
+            new[]
             {
                 "10X Radonius",
                 "20X Radonius",
