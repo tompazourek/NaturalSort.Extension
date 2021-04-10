@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{58C86B88-A
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		format.ps1 = format.ps1
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
