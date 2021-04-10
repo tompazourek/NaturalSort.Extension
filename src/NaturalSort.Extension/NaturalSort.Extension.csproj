@@ -4,7 +4,6 @@
     <TargetFrameworks>net40;netstandard1.3;</TargetFrameworks>
     <LangVersion>9</LangVersion>
     <Deterministic>true</Deterministic>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet package">
