@@ -135,7 +135,7 @@ namespace NaturalSort.Extension
                     if (paddingCompare != 0)
                         return paddingCompare;
                 }
-                else if (_stringComparer != null)
+                else if (_stringComparer is not null)
                 {
                     // compare both tokens as strings
                     var tokenString1 = str1.Substring(startIndex1, rangeLength1);
@@ -176,7 +176,7 @@ namespace NaturalSort.Extension
                     ? c <= 'Z'
                         ? TokenLetters
                         : TokenOther
-                    : c >= '0' && c <= '9'
+                    : c is >= '0' and <= '9'
                         ? TokenDigits
                         : TokenOther;
     }
