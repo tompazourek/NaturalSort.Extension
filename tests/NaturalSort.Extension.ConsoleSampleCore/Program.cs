@@ -3,35 +3,34 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace NaturalSort.Extension.ConsoleSampleCore
+namespace NaturalSort.Extension.ConsoleSampleCore;
+
+internal class Program
 {
-    internal class Program
+    public static void Main()
     {
-        public static void Main()
-        {
-            // Code and data is based on issue: https://github.com/tompazourek/NaturalSort.Extension/issues/2
-            var items = File.ReadAllLines("sample-data.txt").ToArray();
+        // Code and data is based on issue: https://github.com/tompazourek/NaturalSort.Extension/issues/2
+        var items = File.ReadAllLines("sample-data.txt").ToArray();
 
-            Console.WriteLine("Item count: " + items.Length);
+        Console.WriteLine("Item count: " + items.Length);
 
-            var stopwatch = new Stopwatch();
+        var stopwatch = new Stopwatch();
 
-            Console.WriteLine("Sort with StringComparer.OrdinalIgnoreCase");
+        Console.WriteLine("Sort with StringComparer.OrdinalIgnoreCase");
 
-            stopwatch.Restart();
-            var ordered1 = items.OrderBy(i => i, StringComparer.OrdinalIgnoreCase).ToList();
-            stopwatch.Stop();
+        stopwatch.Restart();
+        var ordered1 = items.OrderBy(i => i, StringComparer.OrdinalIgnoreCase).ToList();
+        stopwatch.Stop();
 
-            Console.WriteLine("Duration " + stopwatch.Elapsed);
+        Console.WriteLine("Duration " + stopwatch.Elapsed);
 
-            Console.WriteLine("Sort with StringComparison.OrdinalIgnoreCase.WithNaturalSort()");
+        Console.WriteLine("Sort with StringComparison.OrdinalIgnoreCase.WithNaturalSort()");
 
-            stopwatch.Restart();
-            var ordered2 = items.OrderBy(i => i, StringComparison.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
-            stopwatch.Stop();
-            Console.WriteLine("Duration " + stopwatch.Elapsed);
+        stopwatch.Restart();
+        var ordered2 = items.OrderBy(i => i, StringComparison.OrdinalIgnoreCase.WithNaturalSort()).ToArray();
+        stopwatch.Stop();
+        Console.WriteLine("Duration " + stopwatch.Elapsed);
 
-            Console.ReadKey();
-        }
+        Console.ReadKey();
     }
 }
