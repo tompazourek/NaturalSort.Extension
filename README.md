@@ -19,7 +19,7 @@ Download
 
 Binaries of the last build can be downloaded on the [AppVeyor CI page of the project](https://ci.appveyor.com/project/tompazourek/naturalsort-extension/build/artifacts).
 
-The library is also [published on NuGet.org](https://www.nuget.org/packages/NaturalSort.Extension/) (prerelease), install using:
+The library is also [published on NuGet.org](https://www.nuget.org/packages/NaturalSort.Extension/), install using:
 
 ```
 PM> Install-Package NaturalSort.Extension
