@@ -69,8 +69,7 @@ SqliteConnection conn;
 conn.CreateCollation("NATURALSORT", (x, y) => NaturalComparer.Compare(x, y));
 ```
 
-Then you can use the collation in your SQL query like this:
-
+Then you can use the collation to achieve natural sorting in your SQL query:
 
 ```sql
 SELECT * FROM Customers
