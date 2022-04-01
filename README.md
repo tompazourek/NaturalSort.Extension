@@ -38,7 +38,10 @@ var ordered = sequence.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNa
 // ordered will be "img1.png", "img2.png", "img10.png", "img12.png"
 ```
 
-For more information about natural sort order, see: [Sorting for Humans: Natural Sort Order (Coding Horror)](https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/).
+For more information about natural sort order, see:
+
+- [Natural sort order (Wikipedia)](https://en.wikipedia.org/wiki/Natural_sort_order)
+- [Sorting for Humans: Natural Sort Order (Coding Horror)](https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/)
 
 The `NaturalSortComparer` created using the extension method is a `IComparer<string>`, which you can use in all the places that accept `IComparer<string>` (e.g. `OrderBy`, `Array.Sort`, ...)
 
