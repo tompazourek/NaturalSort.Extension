@@ -52,3 +52,27 @@ new NaturalSortComparer(StringComparison.OrdinalIgnoreCase)
 ```
 
 Note that if you are using a custom `IComparer<string>` (or `StringComparer`), you can also use that instead of the `StringComparison` enum. **However, if you use `StringComparison`, it should perform better as it avoids constructing substrings.**
+
+Usage as collation in SQLite
+----------------------------
+
+If you're using [Microsoft.Data.Sqlite](https://docs.microsoft.com/en-us/dotnet/standard/data/sqlite/), it's also possible to use the extension as collation for use in your SQLite queries.
+
+You can register the collation on a SQLite connection as follows (more info in [docs](https://docs.microsoft.com/en-us/dotnet/standard/data/sqlite/collation)):
+
+```csharp
+private static readonly NaturalSortComparer NaturalComparer = new(StringComparison.InvariantCultureIgnoreCase);
+
+/* ... */
+
+SqliteConnection conn;
+conn.CreateCollation("NATURALSORT", (x, y) => NaturalComparer.Compare(x, y));
+```
+
+Then you can use the collation in your SQL query like this:
+
+
+```sql
+SELECT * FROM Customers
+ORDER BY Name COLLATE NATURALSORT;
+```
