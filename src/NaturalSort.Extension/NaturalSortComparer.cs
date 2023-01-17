@@ -23,6 +23,9 @@ public class NaturalSortComparer : IComparer<string>
     /// </summary>
     private readonly IComparer<string> _stringComparer;
 
+    private readonly bool _numberDescending;
+    private readonly bool _stringDescending;
+
     // Token values (not an enum as a performance micro-optimization)
     private const byte TokenNone = 0;
     private const byte TokenOther = 1;
@@ -45,6 +48,32 @@ public class NaturalSortComparer : IComparer<string>
     public NaturalSortComparer(IComparer<string> stringComparer)
         => _stringComparer = stringComparer;
 
+    /// <summary>
+    /// Constructs comparer with a <seealso cref="StringComparison" /> as the inner mechanism.
+    /// Prefer this to <see cref="NaturalSortComparer(System.Collections.Generic.IComparer{string}, bool, bool)" /> if possible.
+    /// </summary>
+    /// <param name="stringComparison">String comparison to use</param>
+    /// <param name="numberDescending">Whether or not to process numbers in descending order</param>
+    /// <param name="stringDescending">Whether or not to process strings in descending order</param>
+    public NaturalSortComparer(StringComparison stringComparison, bool numberDescending, bool stringDescending) {
+        _stringComparison = stringComparison;
+        _numberDescending = numberDescending;
+        _stringDescending = stringDescending;
+    }
+
+    /// <summary>
+    /// Constructs comparer with a <seealso cref="IComparer{T}" /> string comparer as the inner mechanism.
+    /// Prefer <see cref="NaturalSortComparer(StringComparison, bool, bool)" /> if possible.
+    /// </summary>
+    /// <param name="stringComparer">String comparer to wrap</param>
+    /// <param name="numberDescending">Whether or not to process numbers in descending order</param>
+    /// <param name="stringDescending">Whether or not to process strings in descending order</param>
+    public NaturalSortComparer(IComparer<string> stringComparer, bool numberDescending, bool stringDescending) {
+        _stringComparer = stringComparer;
+        _numberDescending = numberDescending;
+        _stringDescending = stringDescending;
+    }
+    
     /// <inheritdoc />
     public int Compare(string str1, string str2)
     {
@@ -126,12 +155,20 @@ public class NaturalSortComparer : IComparer<string>
                     var digit2 = i < paddingLength2 ? paddingChar : str2[startIndex2 + i - paddingLength2];
 
                     var digitCompare = digit1.CompareTo(digit2);
+
+                    if (_numberDescending) 
+                        digitCompare = -digitCompare;
+
                     if (digitCompare != 0)
                         return digitCompare;
                 }
 
                 // if the numbers are equal, we compare how much we padded the strings
                 var paddingCompare = paddingLength1.CompareTo(paddingLength2);
+
+                if (_numberDescending) 
+                    paddingCompare = -paddingCompare;
+
                 if (paddingCompare != 0)
                     return paddingCompare;
             }
@@ -141,6 +178,10 @@ public class NaturalSortComparer : IComparer<string>
                 var tokenString1 = str1.Substring(startIndex1, rangeLength1);
                 var tokenString2 = str2.Substring(startIndex2, rangeLength2);
                 var stringCompare = _stringComparer.Compare(tokenString1, tokenString2);
+
+                if (_stringDescending) 
+                    stringCompare = -stringCompare;
+
                 if (stringCompare != 0)
                     return stringCompare;
             }
@@ -148,7 +189,10 @@ public class NaturalSortComparer : IComparer<string>
             {
                 // use string comparison
                 var minLength = Math.Min(rangeLength1, rangeLength2);
-                var stringCompare = string.Compare(str1, startIndex1, str2, startIndex2, minLength, _stringComparison);
+                var stringCompare = _stringDescending ?
+                    string.Compare(str2, startIndex2, str1, startIndex1, minLength, _stringComparison) :
+                    string.Compare(str1, startIndex1, str2, startIndex2, minLength, _stringComparison);
+
                 if (stringCompare == 0)
                 {
                     stringCompare = rangeLength1 - rangeLength2;

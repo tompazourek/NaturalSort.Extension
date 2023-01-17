@@ -24,6 +24,66 @@ public class NaturalSortComparerTests
         Assert.Equal(expected, actual, StringComparer.Ordinal);
     }
 
+    private static void RunTestsDescending(string[] input, string[] expected10, string[] expected11, string[] expected00, string[] expected01)
+    {
+        RunTests_StringComparisonOrdinalIgnoreCase_True_False(input, expected10);
+        RunTests_StringComparisonOrdinalIgnoreCase_True_True(input, expected11);
+        RunTests_StringComparisonOrdinalIgnoreCase_False_False(input, expected00);
+        RunTests_StringComparisonOrdinalIgnoreCase_False_True(input, expected01);
+        RunTests_StringComparerOrdinalIgnoreCase_True_False(input, expected10);
+        RunTests_StringComparerOrdinalIgnoreCase_True_True(input, expected11);
+        RunTests_StringComparerOrdinalIgnoreCase_False_False(input, expected00);
+        RunTests_StringComparerOrdinalIgnoreCase_False_True(input, expected01);
+    }
+
+    private static void RunTests_StringComparisonOrdinalIgnoreCase_True_False(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort(true, false)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparisonOrdinalIgnoreCase_True_True(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort(true, true)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparisonOrdinalIgnoreCase_False_False(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort(false, false)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparisonOrdinalIgnoreCase_False_True(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort(false, true)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparerOrdinalIgnoreCase_True_False(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort(true, false)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparerOrdinalIgnoreCase_True_True(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort(true, true)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparerOrdinalIgnoreCase_False_False(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort(false, false)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
+    private static void RunTests_StringComparerOrdinalIgnoreCase_False_True(string[] input, string[] expected)
+    {
+        var actual = input.OrderBy(x => x, StringComparer.OrdinalIgnoreCase.WithNaturalSort(false, true)).ToArray();
+        Assert.Equal(expected, actual, StringComparer.Ordinal);
+    }
+
     [Theory]
     [InlineData(new[] { "a", "b" }, new[] { "a", "b" })]
     [InlineData(new[] { "b", "a" }, new[] { "a", "b" })]
@@ -406,6 +466,37 @@ public class NaturalSortComparerTests
     )]
     public void NodeNaturalSort(string[] input, string[] expected) => RunTests(input, expected);
 
+    [Theory]
+    [InlineData(
+        new[] { "1.0.03", "1.0.003", "1.0.002", "1.0.0001" },
+        new[] { "1.0.03", "1.0.003", "1.0.002", "1.0.0001" },
+        new[] { "1.0.03", "1.0.003", "1.0.002", "1.0.0001" },
+        new[] { "1.0.0001", "1.0.002", "1.0.003", "1.0.03" },
+        new[] { "1.0.0001", "1.0.002", "1.0.003", "1.0.03" }
+    )]
+    [InlineData(
+        new[] { "5D", "1A", "2D", "33A", "5E", "33K", "33D", "5S", "2C", "5C", "5F", "1D", "2M" },
+        new[] { "33A", "33D", "33K", "5C", "5D", "5E", "5F", "5S", "2C", "2D", "2M", "1A", "1D" },
+        new[] { "33K", "33D", "33A", "5S", "5F", "5E", "5D", "5C", "2M", "2D", "2C", "1D", "1A" },
+        new[] { "1A", "1D", "2C", "2D", "2M", "5C", "5D", "5E", "5F", "5S", "33A", "33D", "33K" },
+        new[] { "1D", "1A", "2M", "2D", "2C", "5S", "5F", "5E", "5D", "5C", "33K", "33D", "33A" }
+    )]
+    [InlineData(
+        new[] { "1", "02", "3" },
+        new[] { "3", "02", "1" },
+        new[] { "3", "02", "1" },
+        new[] { "1", "02", "3" },
+        new[] { "1", "02", "3" }
+    )]
+    [InlineData(
+        new[] { "FSI stop, Position: 5", "Mail Group stop, Position: 5", "Mail Group stop, Position: 5", "FSI stop, Position: 6", "FSI stop, Position: 6", "Newsstand stop, Position: 4", "Newsstand stop, Position: 4", "FSI stop, Position: 5" },
+        new[] { "FSI stop, Position: 6", "FSI stop, Position: 6", "FSI stop, Position: 5", "FSI stop, Position: 5", "Mail Group stop, Position: 5", "Mail Group stop, Position: 5", "Newsstand stop, Position: 4", "Newsstand stop, Position: 4" },
+        new[] { "Newsstand stop, Position: 4", "Newsstand stop, Position: 4", "Mail Group stop, Position: 5", "Mail Group stop, Position: 5", "FSI stop, Position: 6", "FSI stop, Position: 6", "FSI stop, Position: 5", "FSI stop, Position: 5" },
+        new[] { "FSI stop, Position: 5", "FSI stop, Position: 5", "FSI stop, Position: 6", "FSI stop, Position: 6", "Mail Group stop, Position: 5", "Mail Group stop, Position: 5", "Newsstand stop, Position: 4", "Newsstand stop, Position: 4" },
+        new[] { "Newsstand stop, Position: 4", "Newsstand stop, Position: 4", "Mail Group stop, Position: 5", "Mail Group stop, Position: 5", "FSI stop, Position: 5", "FSI stop, Position: 5", "FSI stop, Position: 6", "FSI stop, Position: 6" }
+    )]
+    public void NodeNaturalSortReverse(string[] input, string[] expected10, string[] expected11, string[] expected00, string[] expected01) => RunTestsDescending(input, expected10, expected11, expected00, expected01);
+
     /// <summary>
     /// In v2.2.0, this comparison appears to get stuck in an infinite loop whereas v2.1.0 handles it without any problems.
     /// See: https://github.com/tompazourek/NaturalSort.Extension/issues/4 (reported by El-Gor-do)
@@ -418,5 +509,14 @@ public class NaturalSortComparerTests
 
         // assert
         Assert.Equal(0, result);
+    }
+
+    [Fact]
+    public void TestNulls()
+    {
+        var comparer = StringComparer.OrdinalIgnoreCase.WithNaturalSort();
+        Assert.Equal(0, comparer.Compare(null, null));
+        Assert.Equal(1, comparer.Compare("a", null));
+        Assert.Equal(-1, comparer.Compare(null, "a"));
     }
 }
