@@ -4,3 +4,5 @@
 .gitignore      export-ignore
 *.png           binary
 *.snk           binary
+
+dotnet-tools.json
