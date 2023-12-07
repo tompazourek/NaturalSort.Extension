@@ -1,18 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup Label="Basic build">
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net6.0</TargetFrameworks>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <LangVersion>10</LangVersion>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
 
-  <PropertyGroup Label="NuGet package">
+    <!-- Documents, symbols, validation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb;$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <EnablePackageValidation>true</EnablePackageValidation>
+
+    <!-- Strong-named assembly -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)../../NaturalSort.Extension.snk</AssemblyOriginatorKeyFile>
+
+    <!-- Package/Assembly metadata -->
     <Authors>Tomáš Pažourek</Authors>
     <Company>$(Authors)</Company>
-    <Copyright>$(Copyright)</Copyright>
+
+    <Copyright>Copyright $([System.DateTime]::Now.Year) $(Company)</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/tompazourek/NaturalSort.Extension</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageReleaseNotes>$(RepositoryUrl)/releases</PackageReleaseNotes>
     <PackageIcon>logo_64.png</PackageIcon>
@@ -20,30 +28,22 @@
     <Description>Extension method for StringComparison that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").</Description>
   </PropertyGroup>
 
-  <PropertyGroup Label="Symbols, docs">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-  </PropertyGroup>
-
-  <PropertyGroup Label="Signing">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)..\..\NaturalSort.Extension.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-
-  <PropertyGroup Label="CI build only" Condition=" '$(CI)' == 'true' ">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.GuidAttribute">
+      <_Parameter1>7828ef80-071e-4a8b-8a3a-d495ccb4214c</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MinVer" Version="4.3.0">
       <PrivateAssets>all</PrivateAssets>
@@ -52,11 +52,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="*.DotSettings" />
     <None Include="..\..\assets\logo_64.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <Target Name="UpdateAppVeyorBuildVersion" AfterTargets="MinVer" Condition=" '$(APPVEYOR)' == 'true' ">
+  <Target Name="UpdateAppVeyorBuildVersion" AfterTargets="MinVer" Condition="'$(APPVEYOR)'=='true'">
     <Exec Command="appveyor UpdateBuild -Version &quot;$(MinVerVersion)&quot;" />
   </Target>
 </Project>

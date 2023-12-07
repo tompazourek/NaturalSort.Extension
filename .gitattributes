@@ -1,4 +1,6 @@
-* text eol=crlf
-*.cs diff=csharp
-*.png binary
-*.snk binary
+*               text eol=crlf
+*.cs            diff=csharp
+.gitattributes  export-ignore
+.gitignore      export-ignore
+*.png           binary
+*.snk           binary

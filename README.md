@@ -1,5 +1,4 @@
-![NaturalSort.Extension logo](https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/assets/logo_32.png) NaturalSort.Extension
-=====================
+# ![NaturalSort.Extension logo](https://raw.githubusercontent.com/tompazourek/NaturalSort.Extension/master/assets/logo_32.png) NaturalSort.Extension
 
 *Extension method for `StringComparison` or any `IComparer<string>` that adds support for natural sorting  (e.g. "abc1", "abc2", "abc10" instead of "abc1", "abc10", "abc2").*
 
@@ -25,7 +24,7 @@ The library is also [published on NuGet.org](https://www.nuget.org/packages/Natu
 PM> Install-Package NaturalSort.Extension
 ```
 
-<sup>NaturalSort.Extension is built for .NET Standard 1.3, and .NET 6 and is signed to allow use in projects that use strong names.</sup>
+<sup>NaturalSort.Extension is built for .NET Standard 1.3, .NET 6, and .NET 8 and is signed to allow use in projects that use strong names.</sup>
 
 Usage
 -----
