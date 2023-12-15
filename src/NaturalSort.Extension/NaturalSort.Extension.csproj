@@ -5,7 +5,7 @@
 
     <!-- Documents, symbols, validation -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb;$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <DebugType>embedded</DebugType>
     <EnablePackageValidation>true</EnablePackageValidation>
 
     <!-- Strong-named assembly -->
