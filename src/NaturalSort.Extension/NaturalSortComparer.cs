@@ -125,9 +125,26 @@ public class NaturalSortComparer : IComparer<string>
                     var digit1 = i < paddingLength1 ? paddingChar : str1[startIndex1 + i - paddingLength1];
                     var digit2 = i < paddingLength2 ? paddingChar : str2[startIndex2 + i - paddingLength2];
 
-                    var digitCompare = digit1.CompareTo(digit2);
-                    if (digitCompare != 0)
-                        return digitCompare;
+                    if (digit1 is >= '0' and <= '9' && digit2 is >= '0' and <= '9')
+                    {
+                        // both digits are ordinary 0 to 9
+                        var digitCompare = digit1.CompareTo(digit2);
+                        if (digitCompare != 0)
+                            return digitCompare;
+                    }
+                    else
+                    {
+                        // one or both digits is unicode, compare parsed numeric values, and only if they are same, compare as char
+                        var digitNumeric1 = char.GetNumericValue(digit1);
+                        var digitNumeric2 = char.GetNumericValue(digit2);
+                        var digitNumericCompare = digitNumeric1.CompareTo(digitNumeric2);
+                        if (digitNumericCompare != 0)
+                            return digitNumericCompare;
+
+                        var digitCompare = digit1.CompareTo(digit2);
+                        if (digitCompare != 0)
+                            return digitCompare;
+                    }
                 }
 
                 // if the numbers are equal, we compare how much we padded the strings
@@ -164,19 +181,54 @@ public class NaturalSortComparer : IComparer<string>
     }
 
     private static byte GetTokenFromChar(char c)
-        => c >= 'a'
-            ? c <= 'z'
-                ? TokenLetters
-                : c < 128
-                    ? TokenOther
-                    : char.IsLetter(c)
-                        ? TokenLetters
-                        : TokenOther
-            : c >= 'A'
-                ? c <= 'Z'
-                    ? TokenLetters
-                    : TokenOther
-                : c is >= '0' and <= '9'
-                    ? TokenDigits
-                    : TokenOther;
+    {
+        if (c >= 'a')
+        {
+            if (c <= 'z')
+            {
+                return TokenLetters;
+            }
+            else if (c < 128)
+            {
+                return TokenOther;
+            }
+            else if (char.IsLetter(c))
+            {
+                return TokenLetters;
+            }
+            else if (char.IsDigit(c))
+            {
+                return TokenDigits;
+            }
+            else
+            {
+                return TokenOther;
+            }
+        }
+        else
+        {
+            if (c >= 'A')
+            {
+                if (c <= 'Z')
+                {
+                    return TokenLetters;
+                }
+                else
+                {
+                    return TokenOther;
+                }
+            }
+            else
+            {
+                if (c is >= '0' and <= '9')
+                {
+                    return TokenDigits;
+                }
+                else
+                {
+                    return TokenOther;
+                }
+            }
+        }
+    }
 }

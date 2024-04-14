@@ -57,6 +57,14 @@ public class NaturalSortComparerTests
         new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" },
         new[] { "x", "x x", "x!x", "x#x", "x%x", "x&x", "x(x", "x)x", "x,x", "x.x", "x;x", "x@x", "x[x", "x]x", "x^x", "x_x", "x{x", "x}x", "x~x", "x0x", "x1x", "x2x", "x3x", "x4x", "x5x", "x6x", "x7x", "x8x", "x9x", "xAx", "xBx", "xCx", "xDx", "xEx", "xFx", "xGx", "xHx", "xIx", "xJx", "xKx", "xLx", "xMx", "xNx", "xOx", "xPx", "xQx", "xRx", "xSx", "xTx", "xUx", "xVx", "xWx", "xx", "xXx", "xYx", "xZx" }
     )]
+    [InlineData(
+        new[] { "A33", "A3", "A11", "A10", "Z", "A2", "A", "A੨", "A22", "A੨੨" },
+        new[] { "A", "A2", "A੨", "A3", "A10", "A11", "A22", "A੨੨", "A33", "Z" }
+    )]
+    [InlineData(
+        new[] { "A", "A10", "A11", "Z", "A੨", "A੨੨" },
+        new[] { "A", "A੨", "A10", "A11", "A੨੨", "Z" }
+    )]
     public void WindowsExplorer(string[] input, string[] expected) => RunTests(input, expected);
 
     /// <remarks>
