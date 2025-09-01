@@ -65,6 +65,14 @@ public class NaturalSortComparerTests
         new[] { "A", "A10", "A11", "Z", "A੨", "A੨੨" },
         new[] { "A", "A੨", "A10", "A11", "A੨੨", "Z" }
     )]
+    [InlineData(
+        new[] { "a_abc", "a__abc" },
+        new[] { "a__abc", "a_abc" }
+    )]
+    [InlineData(
+        new[] { "a_abc", "a__abc", "a_123", "a__123", "a_9" },
+        new[] { "a__123", "a__abc", "a_9", "a_123", "a_abc" }
+    )]
     public void WindowsExplorer(string[] input, string[] expected) => RunTests(input, expected);
 
     /// <remarks>

@@ -152,27 +152,36 @@ public class NaturalSortComparer : IComparer<string>
                 if (paddingCompare != 0)
                     return paddingCompare;
             }
-            else if (_stringComparer is not null)
-            {
-                // compare both tokens as strings
-                var tokenString1 = str1.Substring(startIndex1, rangeLength1);
-                var tokenString2 = str2.Substring(startIndex2, rangeLength2);
-                var stringCompare = _stringComparer.Compare(tokenString1, tokenString2);
-                if (stringCompare != 0)
-                    return stringCompare;
-            }
             else
             {
-                // use string comparison
-                var minLength = Math.Min(rangeLength1, rangeLength2);
-                var stringCompare = string.Compare(str1, startIndex1, str2, startIndex2, minLength, _stringComparison);
-                if (stringCompare == 0)
+                // only compare non-numeric tokens up to the shorter of their lengths
+                if (rangeLength1 < rangeLength2)
                 {
-                    stringCompare = rangeLength1 - rangeLength2;
+                    rangeLength2 = rangeLength1;
+                    endIndex2 = startIndex2 + rangeLength2;
+                }
+                else if (rangeLength2 < rangeLength1)
+                {
+                    rangeLength1 = rangeLength2;
+                    endIndex1 = startIndex1 + rangeLength1;
                 }
 
-                if (stringCompare != 0)
-                    return stringCompare;
+                if (_stringComparer is not null)
+                {
+                    // compare both tokens as strings
+                    var tokenString1 = str1.Substring(startIndex1, rangeLength1);
+                    var tokenString2 = str2.Substring(startIndex2, rangeLength2);
+                    var stringCompare = _stringComparer.Compare(tokenString1, tokenString2);
+                    if (stringCompare != 0)
+                        return stringCompare;
+                }
+                else
+                {
+                    // use string comparison
+                    var stringCompare = string.Compare(str1, startIndex1, str2, startIndex2, rangeLength1, _stringComparison);
+                    if (stringCompare != 0)
+                        return stringCompare;
+                }
             }
 
             startIndex1 = endIndex1;
