@@ -1,8 +1,7 @@
-*               text eol=crlf
-*.cs            diff=csharp
-.gitattributes  export-ignore
-.gitignore      export-ignore
-*.png           binary
-*.snk           binary
+* text=auto
+*.cs diff=csharp
+.gitattributes export-ignore
+.gitignore export-ignore
+*.png binary
+*.snk binary
 
-dotnet-tools.json eol=lf
