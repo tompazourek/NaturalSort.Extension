@@ -191,53 +191,17 @@ public class NaturalSortComparer : IComparer<string>
 
     private static byte GetTokenFromChar(char c)
     {
-        if (c >= 'a')
+        return c switch
         {
-            if (c <= 'z')
-            {
-                return TokenLetters;
-            }
-            else if (c < 128)
-            {
-                return TokenOther;
-            }
-            else if (char.IsLetter(c))
-            {
-                return TokenLetters;
-            }
-            else if (char.IsDigit(c))
-            {
-                return TokenDigits;
-            }
-            else
-            {
-                return TokenOther;
-            }
-        }
-        else
-        {
-            if (c >= 'A')
-            {
-                if (c <= 'Z')
-                {
-                    return TokenLetters;
-                }
-                else
-                {
-                    return TokenOther;
-                }
-            }
-            else
-            {
-                if (c is >= '0' and <= '9')
-                {
-                    return TokenDigits;
-                }
-                else
-                {
-                    return TokenOther;
-                }
-            }
-        }
+            >= 'a' and <= 'z' => TokenLetters,
+            >= 'a' when c < 128 => TokenOther,
+            >= 'a' when char.IsLetter(c) => TokenLetters,
+            >= 'a' when char.IsDigit(c) => TokenDigits,
+            >= 'a' => TokenOther,
+            >= 'A' and <= 'Z' => TokenLetters,
+            >= 'A' => TokenOther,
+            >= '0' and <= '9' => TokenDigits,
+            _ => TokenOther,
+        };
     }
 }
