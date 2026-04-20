@@ -57,6 +57,7 @@ public class NaturalSortComparer : IComparer<string>
 
         var startIndex1 = 0;
         var startIndex2 = 0;
+        var prevToken = TokenNone;
 
         while (true)
         {
@@ -154,6 +155,17 @@ public class NaturalSortComparer : IComparer<string>
             }
             else
             {
+                // For separator/punctuation tokens following a letter run: record whether each
+                // full token is followed by digits, before truncation adjusts the end indices.
+                // A separator between letters and digits signals a "numbered variant" (e.g. "X-1")
+                // and should sort after the non-numbered form (e.g. "X.log").
+                var nextIsDigits1 = token1 == TokenOther && prevToken == TokenLetters
+                    && endIndex1 < strLength1
+                    && GetTokenFromChar(str1[endIndex1]) == TokenDigits;
+                var nextIsDigits2 = token1 == TokenOther && prevToken == TokenLetters
+                    && endIndex2 < strLength2
+                    && GetTokenFromChar(str2[endIndex2]) == TokenDigits;
+
                 // only compare non-numeric tokens up to the shorter of their lengths
                 if (rangeLength1 < rangeLength2)
                 {
@@ -173,17 +185,32 @@ public class NaturalSortComparer : IComparer<string>
                     var tokenString2 = str2.Substring(startIndex2, rangeLength2);
                     var stringCompare = _stringComparer.Compare(tokenString1, tokenString2);
                     if (stringCompare != 0)
+                    {
+                        // When separator chars differ and exactly one precedes digits, treat that as
+                        // a "numbered variant" indicator and sort it after the non-numbered one
+                        // (e.g. "X.log" before "X-1.log", matching Windows Explorer behavior).
+                        if (nextIsDigits1 != nextIsDigits2)
+                            return nextIsDigits1 ? 1 : -1;
                         return stringCompare;
+                    }
                 }
                 else
                 {
                     // use string comparison
                     var stringCompare = string.Compare(str1, startIndex1, str2, startIndex2, rangeLength1, _stringComparison);
                     if (stringCompare != 0)
+                    {
+                        // When separator chars differ and exactly one precedes digits, treat that as
+                        // a "numbered variant" indicator and sort it after the non-numbered one
+                        // (e.g. "X.log" before "X-1.log", matching Windows Explorer behavior).
+                        if (nextIsDigits1 != nextIsDigits2)
+                            return nextIsDigits1 ? 1 : -1;
                         return stringCompare;
+                    }
                 }
             }
 
+            prevToken = token1;
             startIndex1 = endIndex1;
             startIndex2 = endIndex2;
         }

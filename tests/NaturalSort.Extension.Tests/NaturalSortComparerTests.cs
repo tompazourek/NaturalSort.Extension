@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -72,6 +72,10 @@ public class NaturalSortComparerTests
     [InlineData(
         new[] { "a_abc", "a__abc", "a_123", "a__123", "a_9" },
         new[] { "a__123", "a__abc", "a_9", "a_123", "a_abc" }
+    )]
+    [InlineData(
+        new[] { "X-2.log", "X.log", "X-1.log" },
+        new[] { "X.log", "X-1.log", "X-2.log" }
     )]
     public void WindowsExplorer(string[] input, string[] expected) => RunTests(input, expected);
 
